@@ -16,6 +16,7 @@ import contactRoutes from "./routes/contactRoutes.js";
 import alertRoutes from "./routes/alertRoutes.js";
 import acknowledgementRoutes from "./routes/acknowledgementRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+
 /* ---------------- SECURITY ---------------- */
 
 import {
@@ -49,6 +50,20 @@ const app = express();
 
 const PORT =
   process.env.PORT || 5000;
+
+/*
+  IMPORTANT FOR RENDER
+
+  Render sits behind a reverse proxy
+  and forwards the original client IP
+  using X-Forwarded-For.
+
+  This allows Express and
+  express-rate-limit to correctly
+  identify the client IP.
+*/
+
+app.set("trust proxy", 1);
 
 app.disable("x-powered-by");
 
@@ -154,10 +169,12 @@ app.use(
   "/api/alerts",
   alertRoutes
 );
+
 app.use(
   "/api/admin",
   adminRoutes
 );
+
 app.use(
   "/api/acknowledgements",
   acknowledgementRoutes
@@ -181,7 +198,6 @@ app.use(errorHandler);
 
 const startServer = async () => {
   try {
-
     /*
       IMPORTANT:
       Connect MongoDB BEFORE accepting
@@ -203,7 +219,6 @@ const startServer = async () => {
     );
 
   } catch (error) {
-
     console.error(
       "Failed to start server:",
       error.message
