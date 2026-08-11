@@ -9,11 +9,10 @@ export const getEmailTransporter = () => {
 
   const host =
     process.env.EMAIL_HOST ||
-    "smtp.gmail.com";
+    "smtp-relay.brevo.com";
 
   const port =
-    Number(process.env.EMAIL_PORT) ||
-    587;
+    Number(process.env.EMAIL_PORT) || 587;
 
   const secure =
     process.env.EMAIL_SECURE === "true";
@@ -26,12 +25,12 @@ export const getEmailTransporter = () => {
 
   if (!user || !password) {
     throw new Error(
-      "Email credentials are not configured."
+      "Brevo SMTP credentials are not configured."
     );
   }
 
   console.log(
-    "Creating email transporter:",
+    "Creating Brevo email transporter:",
     {
       host,
       port,
@@ -45,16 +44,6 @@ export const getEmailTransporter = () => {
       host,
       port,
       secure,
-
-      /*
-        Render may resolve Gmail SMTP
-        to IPv6.
-
-        Force IPv4 because the Render
-        environment is unable to reach
-        Gmail SMTP over IPv6.
-      */
-      family: 4,
 
       auth: {
         user,
@@ -78,13 +67,13 @@ export const verifyEmailConnection =
       await emailTransporter.verify();
 
       console.log(
-        "✅ Email service connected successfully"
+        "✅ Brevo SMTP connected successfully"
       );
 
       return true;
     } catch (error) {
       console.error(
-        "❌ Email service connection failed:"
+        "❌ Brevo SMTP connection failed:"
       );
 
       console.error({

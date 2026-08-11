@@ -9,6 +9,10 @@ import morgan from "morgan";
 import connectDB from "./config/db.js";
 import validateEnv from "./config/validateEnv.js";
 
+import {
+  verifyEmailConnection,
+} from "./config/email.js";
+
 /* ---------------- ROUTES ---------------- */
 
 import authRoutes from "./routes/authRoutes.js";
@@ -52,15 +56,15 @@ const PORT =
   process.env.PORT || 5000;
 
 /*
-  IMPORTANT FOR RENDER
+IMPORTANT FOR RENDER
 
-  Render sits behind a reverse proxy
-  and forwards the original client IP
-  using X-Forwarded-For.
+Render sits behind a reverse proxy
+and forwards the original client IP
+using X-Forwarded-For.
 
-  This allows Express and
-  express-rate-limit to correctly
-  identify the client IP.
+This allows Express and
+express-rate-limit to correctly
+identify the client IP.
 */
 
 app.set("trust proxy", 1);
@@ -198,13 +202,24 @@ app.use(errorHandler);
 
 const startServer = async () => {
   try {
+
     /*
-      IMPORTANT:
-      Connect MongoDB BEFORE accepting
-      HTTP requests.
+    IMPORTANT:
+    Connect MongoDB BEFORE accepting
+    HTTP requests.
     */
 
     await connectDB();
+
+    /*
+    VERIFY BREVO SMTP CONNECTION
+
+    This will tell us in Render logs
+    whether Brevo SMTP is configured
+    correctly.
+    */
+
+    await verifyEmailConnection();
 
     app.listen(
       PORT,
@@ -219,6 +234,7 @@ const startServer = async () => {
     );
 
   } catch (error) {
+
     console.error(
       "Failed to start server:",
       error.message
