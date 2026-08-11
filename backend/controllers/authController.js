@@ -211,7 +211,6 @@ export const getMe = async (
   }
 };
 
-
 export const forgotPassword = async (
   req,
   res,
@@ -321,15 +320,25 @@ export const forgotPassword = async (
         getEmailTransporter();
 
       await transporter.sendMail({
+        /*
+          IMPORTANT:
+          Actual sender shown to recipient.
+        */
+
         from: {
           name:
-            process.env
-              .EMAIL_FROM_NAME ||
+            process.env.EMAIL_FROM_NAME ||
             "Silent SOS",
 
           address:
-            process.env.EMAIL_USER,
+            process.env.EMAIL_FROM_ADDRESS ||
+            "silentsos.alerts@gmail.com",
         },
+
+        /*
+          User who requested
+          password reset.
+        */
 
         to: user.email,
 
@@ -394,6 +403,7 @@ export const resetPassword = async (
     if (!token) {
       return res.status(400).json({
         success: false,
+
         message:
           "Password reset token is required.",
       });
@@ -402,6 +412,7 @@ export const resetPassword = async (
     if (!password) {
       return res.status(400).json({
         success: false,
+
         message:
           "New password is required.",
       });
