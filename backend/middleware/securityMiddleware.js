@@ -2,77 +2,80 @@ import helmet from "helmet";
 import cors from "cors";
 import hpp from "hpp";
 
-export const helmetMiddleware =
-  helmet({
-    crossOriginResourcePolicy: {
-      policy: "cross-origin",
-    },
-  });
+/* ========================================
+   HELMET SECURITY
+======================================== */
 
-export const corsMiddleware =
-  cors({
-    origin(origin, callback) {
-      const allowedOrigins = [
-        process.env.CLIENT_URL,
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-      ].filter(Boolean);
+export const helmetMiddleware = helmet({
+  crossOriginResourcePolicy: {
+    policy: "cross-origin",
+  },
+});
 
-      /*
-        Postman / server-to-server
-        requests may not have Origin.
-      */
+/* ========================================
+   CORS
+======================================== */
 
-      if (!origin) {
-        return callback(
-          null,
-          true
-        );
-      }
+export const corsMiddleware = cors({
+  origin(origin, callback) {
+    const allowedOrigins = [
+      process.env.CLIENT_URL,
 
-      if (
-        allowedOrigins.includes(
-          origin
-        )
-      ) {
-        return callback(
-          null,
-          true
-        );
-      }
+      // Local development
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
 
-      console.error(
-        `CORS blocked origin: ${origin}`
-      );
+      // Production - Vercel
+      "https://silent-nexv0dkp3-shuabham-jares-projects.vercel.app",
+    ].filter(Boolean);
 
-      const error =
-        new Error(
-          `Origin ${origin} is not allowed by CORS.`
-        );
+    /*
+      Postman / server-to-server
+      requests may not have Origin.
+    */
 
-      error.statusCode = 403;
+    if (!origin) {
+      return callback(null, true);
+    }
 
-      return callback(error);
-    },
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
 
-    methods: [
-      "GET",
-      "POST",
-      "PUT",
-      "PATCH",
-      "DELETE",
-      "OPTIONS",
-    ],
+    console.error(
+      `CORS blocked origin: ${origin}`
+    );
 
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-    ],
+    const error = new Error(
+      `Origin ${origin} is not allowed by CORS.`
+    );
 
-    credentials: true,
+    error.statusCode = 403;
 
-    optionsSuccessStatus: 204,
-  });
+    return callback(error);
+  },
 
-export const hppMiddleware =
-  hpp();
+  methods: [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+  ],
+
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+  ],
+
+  credentials: true,
+
+  optionsSuccessStatus: 204,
+});
+
+/* ========================================
+   HTTP PARAMETER POLLUTION PROTECTION
+======================================== */
+
+export const hppMiddleware = hpp();
