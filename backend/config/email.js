@@ -30,12 +30,15 @@ export const getEmailTransporter = () => {
     );
   }
 
-  console.log("Creating email transporter:", {
-    host,
-    port,
-    secure,
-    user,
-  });
+  console.log(
+    "Creating email transporter:",
+    {
+      host,
+      port,
+      secure,
+      user,
+    }
+  );
 
   transporter =
     nodemailer.createTransport({
