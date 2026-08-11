@@ -1,0 +1,78 @@
+:root {
+  --sos-primary: #dc2626;
+  --sos-primary-dark: #b91c1c;
+  --sos-primary-light: #fee2e2;
+
+  --sos-dark: #0f172a;
+  --sos-text: #1e293b;
+  --sos-muted: #64748b;
+
+  --sos-bg: #f8fafc;
+  --sos-white: #ffffff;
+  --sos-border: #e2e8f0;
+
+  --sos-success: #16a34a;
+  --sos-warning: #f59e0b;
+
+  --sos-radius: 14px;
+  --sos-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--sos-bg);
+  color: var(--sos-text);
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+.form-control {
+  min-height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--sos-border);
+}
+
+.form-control:focus {
+  border-color: var(--sos-primary);
+  box-shadow: 0 0 0 0.2rem rgba(220, 38, 38, 0.12);
+}
+
+.btn-sos {
+  min-height: 48px;
+  border: none;
+  border-radius: 10px;
+  background: var(--sos-primary);
+  color: white;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn-sos:hover {
+  background: var(--sos-primary-dark);
+  color: white;
+  transform: translateY(-1px);
+}

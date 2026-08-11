@@ -1,0 +1,167 @@
+:root {
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  --sos-primary: #dc3545;
+  --sos-primary-dark: #b02a37;
+
+  --primary: #0d6efd;
+  --success: #198754;
+  --warning: #ffc107;
+  --danger: #dc3545;
+
+  --bg-main: #f8f9fa;
+  --bg-card: #ffffff;
+
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+
+  --border-color: #dee2e6;
+
+  --sidebar-width: 260px;
+
+  --transition: 0.25s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ------------------------------
+   Typography
+------------------------------ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+/* ------------------------------
+   Links
+------------------------------ */
+
+a {
+  text-decoration: none;
+}
+
+/* ------------------------------
+   Buttons
+------------------------------ */
+
+button {
+  transition: var(--transition);
+}
+
+/* ------------------------------
+   Cards
+------------------------------ */
+
+.app-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* ------------------------------
+   Form
+------------------------------ */
+
+.form-control,
+.form-select {
+  min-height: 46px;
+  border-radius: 8px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+/* ------------------------------
+   SOS
+------------------------------ */
+
+.sos-color {
+  color: var(--sos-primary);
+}
+
+.sos-bg {
+  background-color: var(--sos-primary);
+}
+
+/* ------------------------------
+   Utilities
+------------------------------ */
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+/* ------------------------------
+   Responsive
+------------------------------ */
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+.auth-loader-screen {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 13px;
+
+  background: #f8fafc;
+}
+
+.auth-loader-screen p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
