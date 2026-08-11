@@ -46,6 +46,16 @@ export const getEmailTransporter = () => {
       port,
       secure,
 
+      /*
+        Render may resolve Gmail SMTP
+        to IPv6.
+
+        Force IPv4 because the Render
+        environment is unable to reach
+        Gmail SMTP over IPv6.
+      */
+      family: 4,
+
       auth: {
         user,
         pass: password,
