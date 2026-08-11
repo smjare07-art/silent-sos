@@ -6,8 +6,7 @@ const api = axios.create({
     "http://localhost:5000/api",
 
   headers: {
-    "Content-Type":
-      "application/json",
+    "Content-Type": "application/json",
   },
 
   withCredentials: true,
@@ -19,19 +18,13 @@ api.interceptors.response.use(
   (response) => response,
 
   (error) => {
-    if (
-      error.response?.status ===
-      401
-    ) {
+    if (error.response?.status === 401) {
       const code =
-        error.response?.data
-          ?.code;
+        error.response?.data?.code;
 
       if (
-        code ===
-          "TOKEN_EXPIRED" ||
-        code ===
-          "INVALID_TOKEN"
+        code === "TOKEN_EXPIRED" ||
+        code === "INVALID_TOKEN"
       ) {
         const path =
           window.location.pathname;
@@ -47,9 +40,7 @@ api.interceptors.response.use(
       }
     }
 
-    return Promise.reject(
-      error
-    );
+    return Promise.reject(error);
   }
 );
 
